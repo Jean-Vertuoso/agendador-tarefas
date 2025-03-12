@@ -1,0 +1,37 @@
+package com.vertuoso.agendadortarefas.business.services;
+
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
+import com.vertuoso.agendadortarefas.business.dto.TarefaDTO;
+import com.vertuoso.agendadortarefas.business.mapper.TarefaConverter;
+import com.vertuoso.agendadortarefas.infrastructure.entities.TarefaEntity;
+import com.vertuoso.agendadortarefas.infrastructure.enums.StatusNotificacaoEnum;
+import com.vertuoso.agendadortarefas.infrastructure.repositories.TarefaRepository;
+import com.vertuoso.agendadortarefas.infrastructure.security.JwtUtil;
+
+@Service
+public class TarefaService {
+
+    private final TarefaRepository tarefaRepository;
+    private final TarefaConverter tarefaConverter;
+    private final JwtUtil jwtUtil;
+
+    public TarefaService(TarefaRepository tarefaRepository, TarefaConverter tarefaConverter, JwtUtil jwtUtil) {
+        this.tarefaRepository = tarefaRepository;
+        this.tarefaConverter = tarefaConverter;
+        this.jwtUtil = jwtUtil;
+    }
+
+    public TarefaDTO gravarTarefa(TarefaDTO tarefaDTO, String token){
+        String email = jwtUtil.extrairEmailToken(token.substring(7));
+        tarefaDTO.setDataCriacao(LocalDateTime.now());
+        tarefaDTO.setStatusNotificacaoEnum(StatusNotificacaoEnum.PENDENTE);
+        tarefaDTO.setEmailUsuario(email);
+        TarefaEntity entity = tarefaConverter.paraTarefaEntity(tarefaDTO);
+
+        return tarefaConverter.paraTarefaDTO(
+                tarefaRepository.save(entity));
+    }
+}
