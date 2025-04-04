@@ -1,4 +1,4 @@
-package com.vertuoso.agendadortarefas.infrastructure.client;
+package com.vertuoso.agendadortarefas.infrastructure.security.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
