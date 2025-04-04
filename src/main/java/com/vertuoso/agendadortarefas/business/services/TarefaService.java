@@ -1,6 +1,7 @@
 package com.vertuoso.agendadortarefas.business.services;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -41,8 +42,9 @@ public class TarefaService {
     }
 
     public List<TarefaDTO> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal){
-        return tarefaConverter.paraListaTarefasDTO(
-                tarefaRepository.findByDataEventoBetween(dataInicial, dataFinal));
+        StatusNotificacaoEnum status = StatusNotificacaoEnum.PENDENTE;
+
+        return tarefaConverter.paraListaTarefasDTO(tarefaRepository.findByDataEventoBetweenAndStatusNotificacaoEnum(dataInicial, dataFinal, status));
     }
 
     public List<TarefaDTO> buscaTarefasPorEmail(String token){
