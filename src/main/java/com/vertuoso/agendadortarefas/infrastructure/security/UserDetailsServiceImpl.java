@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.vertuoso.agendadortarefas.business.dto.UsuarioDTO;
-import com.vertuoso.agendadortarefas.infrastructure.client.UsuarioClient;
+import com.vertuoso.agendadortarefas.infrastructure.security.client.UsuarioClient;
 
 @Service
 public class UserDetailsServiceImpl {

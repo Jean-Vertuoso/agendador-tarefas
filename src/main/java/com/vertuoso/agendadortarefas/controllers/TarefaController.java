@@ -26,15 +26,16 @@ public class TarefaController {
         return ResponseEntity.ok(tarefaService.gravarTarefa(dto, token));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<TarefaDTO>> buscaTarefasPorEmail(@RequestHeader("Authorization")String token){
+        return ResponseEntity.ok(tarefaService.buscaTarefasPorEmail(token));
+    }
+
     @GetMapping("/eventos")
     public ResponseEntity<List<TarefaDTO>> buscaListaDeTarefasPorPeriodo(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime dataInicial,
                                                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime dataFinal){
-        return ResponseEntity.ok(tarefaService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal));
-    }
 
-    @GetMapping
-    public ResponseEntity<List<TarefaDTO>> buscaTarefasPorEmail(@RequestHeader("Authorization")String token){
-        return ResponseEntity.ok(tarefaService.buscaTarefasPorEmail(token));
+        return ResponseEntity.ok(tarefaService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal));
     }
 
     @DeleteMapping
